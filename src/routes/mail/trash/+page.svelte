@@ -39,7 +39,7 @@
 	}
 </script>
 
-<div class="flex flex-col" >
+<div class="flex flex-col">
 	<Header />
 
 	<div class="grid grid-cols-[auto_1fr]" in:fade={{ duration: 400 }}>

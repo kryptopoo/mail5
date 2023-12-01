@@ -6,13 +6,11 @@
 	import Header from '$lib/components/Header.svelte';
 	import { onMount } from 'svelte';
 
-	// {$page.params.id}
 	const mail5 = new Mail5($accountStore);
 	let email: Mail5Email = { subject: '', content: '', from: '', to: '', attachments: [], status: '' };
 	let replyEmail: Mail5Email = { subject: '', content: '', from: '', to: '', attachments: [], status: '' };
 	onMount(async () => {
 		const emailById = await mail5.getById($page.params.id);
-		console.log('emailById', emailById);
 		if (emailById) {
 			replyEmail = emailById;
 

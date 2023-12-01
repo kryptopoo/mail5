@@ -1,9 +1,7 @@
 function shortDID(did: string, len: number = 20) {
 	if (did && did.length > 0) {
-		// normal is 54
+		// short form len is 54
 		did = did.slice(0, len);
-
-		// return `${did.slice(0, 14)}...${did.slice(50)}}`;
 
 		return `${did}...`;
 	}

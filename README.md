@@ -1,22 +1,29 @@
-# create-svelte
+# Mail5
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Mail5 is a decentralized/self-sovereign email app that allows send/reply emails to each other. Giving users control over their data and identity.
 
-## Creating a project
+Features:
+- Create DID and connect to local agent (browser)
+- Backup/Export and Restore/Import DID
+- Compose and save draft emails
+- Send/Reply/Forward emails
+- Support contact by easy-to-remember name for the DID
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Demo & Screenshots
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+[![Mail5 Demo](https://img.youtube.com/vi/EJ4SJkp7CCM/0.jpg)](https://youtu.be/EJ4SJkp7CCM)
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
 
-## Developing
+<img src="https://i.imgur.com/esAn5jw.png" width="1000px" >
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+<img src="https://i.imgur.com/qVsayT7.png" width="1000px" >
+
+
+## Getting Start
+
+### Developing
+
+Install dependencies with `npm install` (or `pnpm install` or `yarn`), start a dev server:
 
 ```bash
 npm run dev
@@ -25,14 +32,10 @@ npm run dev
 npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
+### Building
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

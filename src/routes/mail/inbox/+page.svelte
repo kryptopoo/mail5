@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { Mail5, type Mail5Email } from '$lib/mail5';
-	import { accountStore } from '$lib/store';
 	import { onMount } from 'svelte';
 	import { getToastStore } from '@skeletonlabs/skeleton';
+	import { fade } from 'svelte/transition';
+
+	import { Mail5, type Mail5Email } from '$lib/mail5';
+	import { accountStore } from '$lib/store';
 	import MailNav from '$lib/components/MailNav.svelte';
 	import MailContent from '$lib/components/MailContent.svelte';
 	import Header from '$lib/components/Header.svelte';
-	import { fade } from 'svelte/transition';
 
 	const toastStore = getToastStore();
 	const mail5 = new Mail5($accountStore);
@@ -15,9 +16,9 @@
 	let selectedEmail: Mail5Email;
 
 	onMount(async () => {
-		// setInterval(() => {
-		// 	emails = mail5.inbox();
-		// }, 1000 * 30);
+		setInterval(() => {
+			emails = mail5.inbox();
+		}, 1000 * 60);
 	});
 
 	async function deleteEmail(event: any) {

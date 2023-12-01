@@ -1,15 +1,29 @@
-<!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 <script lang="ts">
 	import Editor from '@tinymce/tinymce-svelte';
 	import { Mail5, type Mail5Email } from '$lib/mail5';
 	import { accountStore } from '$lib/store';
-	import { FileButton } from '@skeletonlabs/skeleton';
-	import Header from '$lib/components/Header.svelte';
+	import { getModalStore } from '@skeletonlabs/skeleton';
+	import { Modal, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { getToastStore } from '@skeletonlabs/skeleton';
-	import { page } from '$app/stores';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import MailContent from '$lib/components/MailContent.svelte';
 	import { goto } from '$app/navigation';
+	import ModalContactSelect from './ModalContactSelect.svelte';
+
+	const modalStore = getModalStore();
+	const modalComponent: ModalComponent = { ref: ModalContactSelect };
+	const modal: ModalSettings = {
+		type: 'component',
+		component: modalComponent,
+		response: async (r: any) => {
+			if (r) {
+				console.log('r', r);
+				if (r.action == 'select') {
+					email.to = r.did;
+				}
+			}
+		}
+	};
 
 	const toastStore = getToastStore();
 
@@ -22,33 +36,18 @@
 		branding: false
 	};
 
-	// let email: Mail5Email = {
-	// 	from: $accountStore?.did,
-	// 	to: '',
-	// 	subject: 'hello',
-	// 	content: 'hello world',
-	// 	attachments: []
-	// };
-
 	export let email: Mail5Email;
 	export let replyEmail: Mail5Email | undefined = undefined;
 	export let forwardEmail: Mail5Email | undefined = undefined;
 
 	async function send() {
-		console.log('email', email);
-		console.log('replyEmail', replyEmail);
-		console.log('forwardEmail', forwardEmail);
-
 		let rs;
 		if (replyEmail) {
 			rs = await mail5.reply(email, replyEmail);
-			console.log('reply rs', rs);
 		} else if (forwardEmail) {
 			rs = await mail5.forward(email, forwardEmail);
-			console.log('forward rs', rs);
 		} else {
 			rs = await mail5.send(email);
-			console.log('send rs', rs);
 		}
 
 		if (rs.status.code === 202) {
@@ -84,6 +83,10 @@
 				message: 'Your email has been saved successfully!',
 				background: 'variant-filled-success'
 			});
+
+			setTimeout(() => {
+				goto('/mail/drafts');
+			}, 2000);
 		} else {
 			toastStore.trigger({
 				message: rs.status.detail,
@@ -93,18 +96,9 @@
 	}
 
 	function onFileChanged(e: Event): void {
-		// console.log('file data:', e);
-		console.log('file files:', files);
-
-		// reader.readAsBinaryString(files[0]);
-
 		for (let i = 0; i < files.length; i++) {
 			const reader = new FileReader();
 			reader.addEventListener('load', async function (e: any) {
-				// console.log('e.target', e);
-				// const filecontent = e.target.result;
-				// console.log('filecontent', filecontent);
-
 				email.attachments.push({
 					name: files[i].name,
 					type: files[i].type,
@@ -124,12 +118,15 @@
 
 	<div class="flex flex-row items-center">
 		<div class="w-24">To:</div>
-		<input class="input variant-form-material" title="To" type="text" placeholder="DID" bind:value={email.to} />
+		<div class="flex w-full gap-2">
+			<input class="input variant-form-material" title="To" type="text" placeholder="DID" bind:value={email.to} />
+			<button class="btn variant-ringed-primary" on:click={() => modalStore.trigger(modal)}><i class="fa-regular fa-address-book" /></button>
+		</div>
 	</div>
 
 	<div class="flex flex-row items-center">
 		<div class="w-24">Subject:</div>
-		<input class="input variant-form-material" title="Subject" type="text" placeholder="Subject" bind:value={email.subject} />
+		<input class="input variant-form-material mr-2" title="Subject" type="text" placeholder="Subject" bind:value={email.subject} />
 	</div>
 
 	<!-- <input class="input" title="CC" type="text" placeholder="CC" /> -->
@@ -154,14 +151,12 @@
 		<Editor apiKey="j3p1cvqh71km1umwa7tuun4ydc6tm0tvxlzs8t9qfexheyx6" {conf} bind:value={email.content} />
 	</div>
 
-	<!-- <input class="input" type="file" multiple /> -->
 	<input class="input" type="file" multiple bind:files on:change={onFileChanged} />
 
 	<div class="flex flex-row-reverse gap-1">
-		<!-- <button type="button" class="btn variant-filled-primary" on:click={send}>Send</button>
-		<button type="button" class="btn variant-filled-primary" on:click={saveDraft}>Save as Draft</button> -->
-
 		<button class="btn variant-filled-primary" on:click={send}><i class="fa fa-paper-plane" /><span>Send</span></button>
 		<button class="btn variant-soft" on:click={saveDraft}><i class="fa fa-floppy-disk" /><span>Save as Draft</span></button>
 	</div>
 </div>
+
+<Modal />

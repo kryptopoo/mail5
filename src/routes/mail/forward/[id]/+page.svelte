@@ -12,7 +12,6 @@
 	let forwardEmail: Mail5Email = { subject: '', content: '', from: '', to: '', attachments: [], status: '' };
 	onMount(async () => {
 		const emailById = await mail5.getById($page.params.id);
-		console.log('emailById', emailById);
 		if (emailById) {
 			forwardEmail = emailById;
 

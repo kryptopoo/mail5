@@ -1,45 +1,18 @@
 <script lang="ts">
-	import { Mail5, type Mail5Email } from '$lib/mail5';
-	import { copyClipboard, download, shortDID } from '$lib/utils';
-	import { accountStore } from '$lib/store';
-	import { Accordion, AccordionItem, getToastStore } from '@skeletonlabs/skeleton';
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import { createEventDispatcher } from 'svelte';
+
+	import type { Mail5Email } from '$lib/mail5';
+	import { copyClipboard, download, shortDID } from '$lib/utils';
 	import MailContent from '$lib/components/MailContent.svelte';
 
 	const dispatch = createEventDispatcher();
-	const toastStore = getToastStore();
-	const mail5 = new Mail5($accountStore);
 
 	export let email: Mail5Email | undefined;
 	export let editable: boolean;
 	export let replyable: boolean;
 	export let deletable: boolean = true;
 	export let title: string = '';
-
-	console.log('mailcontent', email);
-
-	// async function download(base64: string) {
-	// 	const res = await fetch(base64);
-	// 	const resBlob = await res.blob();
-	// 	saveAsFile('image.png', resBlob);
-	// }
-
-	// async function deleteEmail() {
-	// 	const rs = await mail5.delete(email?.record?.id);
-
-	// 	if (rs?.status.code == 202) {
-	// 		// success
-	// 		toastStore.trigger({
-	// 			message: 'Deleted successfully!',
-	// 			background: 'variant-filled-success'
-	// 		});
-	// 	} else {
-	// 		toastStore.trigger({
-	// 			message: rs?.status.detail || 'unknown error',
-	// 			background: 'variant-filled-error'
-	// 		});
-	// 	}
-	// }
 </script>
 
 {#if email}

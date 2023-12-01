@@ -1,11 +1,7 @@
 <script lang="ts">
-	import { Web5 } from '@web5/api';
 	import { Mail5 } from '$lib/mail5';
 	import type { Mail5Email } from '$lib/mail5';
 	import { accountStore } from '$lib/store';
-	import { onMount } from 'svelte';
-	import MailList from '$lib/components/MailList.svelte';
-	import { saveAsFile } from '$lib/utils';
 	import { getToastStore } from '@skeletonlabs/skeleton';
 	import MailNav from '$lib/components/MailNav.svelte';
 	import Header from '$lib/components/Header.svelte';

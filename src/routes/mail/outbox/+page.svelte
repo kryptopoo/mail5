@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { Mail5, type Mail5Email } from '$lib/mail5';
 	import { accountStore } from '$lib/store';
-	import { getToastStore } from '@skeletonlabs/skeleton';
 	import MailNav from '$lib/components/MailNav.svelte';
 	import MailContent from '$lib/components/MailContent.svelte';
 	import Header from '$lib/components/Header.svelte';
+
+	import { getToastStore } from '@skeletonlabs/skeleton';
 	import { fade } from 'svelte/transition';
 
 	const toastStore = getToastStore();

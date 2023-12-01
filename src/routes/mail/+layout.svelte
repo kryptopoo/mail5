@@ -104,8 +104,8 @@
 					<AppRailAnchor
 						regionLabel="!text-base text-left ml-4"
 						aspectRatio="aspect-[5/1]"
-						href="/mail/draft"
-						selected={$page.url.pathname === '/mail/draft'}><i class="fa-regular fa-file-lines mr-4" />Drafts</AppRailAnchor
+						href="/mail/drafts"
+						selected={$page.url.pathname === '/mail/drafts'}><i class="fa-regular fa-file-lines mr-4" />Drafts</AppRailAnchor
 					>
 				</div>
 
@@ -124,6 +124,15 @@
 						aspectRatio="aspect-[5/1]"
 						href="/mail/trash"
 						selected={$page.url.pathname === '/mail/trash'}><i class="fa-regular fa-trash-can mr-3" />Trash</AppRailAnchor
+					>
+				</div>
+
+				<div class="my-2">
+					<AppRailAnchor
+						regionLabel="!text-base text-left ml-4"
+						aspectRatio="aspect-[5/1]"
+						href="/mail/contact"
+						selected={$page.url.pathname === '/mail/contact'}><i class="fa-regular fa-address-book mr-3" />Contact</AppRailAnchor
 					>
 				</div>
 			</AppRail>

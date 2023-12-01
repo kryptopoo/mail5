@@ -11,30 +11,57 @@
 
 	export let emails: Promise<Mail5Email[]>;
 
+	let selectedEmail: Mail5Email | undefined;
+
 	const dispatch = createEventDispatcher();
+
+	function selectEmail(email: Mail5Email) {
+		selectedEmail = email;
+		dispatch('selectEmail', email);
+	}
 </script>
 
-<nav class="list-nav h-[calc(100vh-4rem)] min-w-[300px] border-r-[1px]  p-2">
+<nav class="list-nav h-[calc(100vh-4rem)] min-w-[300px] border-r-[1px] p-2">
 	<ul>
 		{#await emails}
-			<li class="text-center"><Loading /></li>
+			{#each Array(8) as i}
+				<li class="text-center">
+					<div class="card p-3 space-y-3 cursor-pointer">
+						<div class="grid grid-cols-3 gap-2">
+							<div class="placeholder animate-pulse col-span-2" />
+							<div class="placeholder animate-pulse" />
+						</div>
+						<div class="placeholder animate-pulse" />
+					</div>
+				</li>
+			{/each}
 		{:then emails}
 			{#if emails.length > 0}
 				{#each emails as email}
 					<li class="group">
-						<button class="btn variant-soft flex flex-col p-0 w-full" style="align-items: start;" on:click={() => dispatch('selectEmail', email)}>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<div class="card p-3 space-y-1 cursor-pointer {selectedEmail == email ? 'active' : ''}" on:click={() => selectEmail(email)}>
+							<div class="grid grid-cols-3 gap-2 items-center">
+								<div class="col-span-2">{shortDID(email.from)}</div>
+								<div class="text-xs text-right">{formatDate(email.record?.dateCreated)}</div>
+							</div>
+							<div class="text-base grid grid-cols-2 w-full items-center">
+								<div>{email.subject}</div>
+								<div class="text-right"><i on:click={() => dispatch('deleteEmail', email)} class="fa fa-trash invisible group-hover:visible" /></div>
+							</div>
+						</div>
+
+						<!-- <button class="btn variant-soft flex flex-col p-0 w-full" style="align-items: start;" on:click={() => dispatch('selectEmail', email)}>
 							<div class="flex justify-between w-full items-center">
 								<div>{shortDID(email.from)}</div>
 								<div class="text-xs">{formatDate(email.record?.dateCreated)}</div>
 							</div>
 							<div class="flex justify-between w-full items-center text-lg" style="margin-left: 0;">
 								<div>{email.subject}</div>
-								<!-- <button  on:click={()=> mail5.delete(email.record?.id)}></button>			 -->
-								<!-- svelte-ignore a11y-click-events-have-key-events -->
-								<!-- svelte-ignore a11y-no-static-element-interactions -->
 								<i on:click={() => dispatch('deleteEmail', email)} class="fa fa-trash invisible group-hover:visible" />
 							</div>
-						</button>
+						</button> -->
 					</li>
 				{/each}
 				<li class="invisible">{dispatch('selectEmail', emails[0])}</li>
@@ -46,3 +73,14 @@
 		{/await}
 	</ul>
 </nav>
+
+<style>
+	.card:hover {
+		color: rgb(var(--on-primary));
+		background-color: rgb(var(--color-primary-500)) !important ;
+	}
+	.active {
+		color: rgb(var(--on-primary));
+		background-color: rgb(var(--color-primary-500)) !important ;
+	}
+</style>
