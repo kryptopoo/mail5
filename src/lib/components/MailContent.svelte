@@ -93,7 +93,7 @@
 					{#each email.attachments as attachment}
 						<!-- {attachment} -->
 						<!-- <button on:click={() => download(attachment)}>Download</button> -->
-						<button class="btn btn-sm variant-soft" on:click={() => download(attachment.name, attachment.base64)}
+						<button class="btn btn-sm variant-soft mr-1" on:click={() => download(attachment.name, attachment.base64)}
 							><i class="fa-solid fa-paperclip mr-2" />{attachment.name}</button
 						>
 					{/each}

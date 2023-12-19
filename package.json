@@ -38,6 +38,6 @@
     "@floating-ui/dom": "^1.5.3",
     "@fortawesome/fontawesome-free": "^6.4.2",
     "@tinymce/tinymce-svelte": "^1.0.1",
-    "@web5/api": "^0.8.2"
+    "@web5/api": "^0.8.3"
   }
 }

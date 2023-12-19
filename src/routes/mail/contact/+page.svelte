@@ -21,14 +21,10 @@
 		component: modalComponent,
 		response: async (r: any) => {
 			if (r) {
-				console.log('r', r);
 				// save
 				if (r.action == 'save') {
 					if (r.recordId == undefined) {
-						console.log('add contact', r);
 						const { record, status } = await mail5.addContact(r.did, r.name);
-
-						console.log('add contact rs', { record, status });
 
 						// success
 						toastStore.trigger({
