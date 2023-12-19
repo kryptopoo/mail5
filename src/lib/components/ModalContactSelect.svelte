@@ -27,7 +27,6 @@
 	};
 
 	function onSelect(e: any): void {
-		console.log('row', e.detail);
 		formData.action = 'select';
 		formData.name = e.detail[0];
 		formData.did = e.detail[1];

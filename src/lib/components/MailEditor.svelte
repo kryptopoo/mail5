@@ -17,7 +17,6 @@
 		component: modalComponent,
 		response: async (r: any) => {
 			if (r) {
-				console.log('r', r);
 				if (r.action == 'select') {
 					email.to = r.did;
 				}
@@ -69,11 +68,6 @@
 	}
 
 	async function saveDraft() {
-		// email.content = email.content.replace(/\\/g, '&#92;');
-		console.log('email', email);
-		console.log('email content', email.content);
-		console.log('JSON email', JSON.stringify(email));
-
 		const rs = await mail5.saveDraft(email);
 		console.log('saveDraft rs', rs);
 

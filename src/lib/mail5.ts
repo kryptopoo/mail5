@@ -43,7 +43,7 @@ export interface Mail5Email {
 }
 
 export class Mail5 {
-	protocolSchema = 'https://mail5.xyz/v0.2.3';
+	protocolSchema = 'https://mail5.xyz/v0.2.5';
 
 	protocolDefinition = {
 		protocol: this.protocolSchema,
@@ -103,7 +103,7 @@ export class Mail5 {
 					},
 					{
 						who: 'author',
-						of: 'draft',
+						of: 'contact',
 						can: 'read'
 					}
 				]
@@ -355,9 +355,9 @@ export class Mail5 {
 		});
 
 		// SEND
-		const { status } = await record?.send(email.to);
+		const res = await record?.send(email.to);
 
-		return { record, status };
+		return { record, status: res?.status };
 	}
 
 	async reply(email: Mail5Email, replyEmail: Mail5Email) {
@@ -385,9 +385,10 @@ export class Mail5 {
 		});
 
 		// SEND
-		const { status } = await record?.send(email.to);
+		const res = await record?.send(email.to);
+		console.log('reply', record, res);
 
-		return { record, status };
+		return { record, status: res?.status };
 	}
 
 	// TODO: review
@@ -432,9 +433,9 @@ export class Mail5 {
 		});
 
 		// SEND
-		const { status } = await record?.send(email.to);
+		const res = await record?.send(email.to);
 
-		return { record, status };
+		return { record, status: res?.status };
 	}
 
 	async saveDraft(email: Mail5Email) {
@@ -474,12 +475,13 @@ export class Mail5 {
 			message: {
 				filter: {
 					protocol: this.protocolDefinition.protocol,
-					protocolPath: 'email',
+					// protocolPath: 'email',
 					recipient: this.account.did
 				},
 				dateSort: DateSort.CreatedDescending
 			}
 		});
+		console.log('inbox', records)
 
 		return this.map(records, { status: 'delivered', recipient: this.account.did });
 	}
@@ -489,11 +491,12 @@ export class Mail5 {
 			message: {
 				filter: {
 					protocol: this.protocolDefinition.protocol,
-					protocolPath: 'email'
+					// protocolPath: 'email'
 				},
 				dateSort: DateSort.CreatedDescending
 			}
 		});
+		console.log('outbox', records)
 
 		return this.map(records, { status: 'delivered', sender: this.account.did });
 	}
@@ -566,6 +569,7 @@ export class Mail5 {
 
 				try {
 					let recordData: Mail5Email = await record.data.json();
+					console.log('recordData', recordData)
 
 					recordData.record = {
 						id: record.id,

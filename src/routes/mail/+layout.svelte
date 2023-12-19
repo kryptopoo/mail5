@@ -1,9 +1,5 @@
 <script lang="ts">
-	import { Web5 } from '@web5/api';
 	import { onMount } from 'svelte';
-	import { Mail5 } from '$lib/mail5';
-	import { fade } from 'svelte/transition';
-
 	import '../../app.postcss';
 	import { AppShell, AppBar, AppRailAnchor, AppRail } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
@@ -13,49 +9,8 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	import process from 'process';
-	import { Buffer } from 'buffer';
-	import EventEmitter from 'events';
-	import { browser } from '$app/environment';
 	import { accountStore } from '$lib/store';
-	import { saveAsFile } from '$lib/utils';
 	import Logo from '$lib/components/Logo.svelte';
-
-	// if (browser) {
-	// 	window.Buffer = Buffer;
-	// 	window.process = process;
-	// 	(window as any).EventEmitter = EventEmitter;
-	// 	window.global = window;
-	// }
-
-	// let myID: string;
-	// let importAccountContent: string;
-
-	// const createAccount = async () => {
-	// 	const mail5 = new Mail5();
-	// 	const newAccount = await mail5.createAccount();
-	// 	mail5.account = newAccount;
-	// 	accountStore.set(newAccount);
-
-	// 	myID = mail5.account.did;
-	// };
-
-	// function saveAsFile(filename: string, data: any) {
-	// 	const blob = new Blob([data]);
-	// 	const link = document.createElement('a');
-	// 	link.download = filename;
-	// 	link.href = window.URL.createObjectURL(blob);
-	// 	link.click();
-	// }
-
-	// const importAccount = async () => {
-	// 	// window.open(
-	// 	// 	URL.createObjectURL(new Blob([JSON.stringify({ id: 1 })], { type: 'application/binary' }))
-	// 	// );
-	// 	const mail5 = new Mail5();
-	// 	const acc = await mail5.importAccount(importAccountContent);
-	// 	console.log('import acc', acc);
-	// };
 
 	onMount(() => {
 		if (!$accountStore) goto('/');
@@ -63,21 +18,6 @@
 </script>
 
 <AppShell>
-	<!-- <svelte:fragment slot="header"
-		>
-		<AppBar>
-			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase" />
-			</svelte:fragment>
-			<svelte:fragment slot="trail">
-				<textarea bind:value={importAccountContent} />
-				<input value={myID} />
-				<button on:click={createAccount}>create account</button>
-				<button on:click={importAccount}>import account</button>
-			</svelte:fragment>
-		</AppBar></svelte:fragment
-	> -->
-
 	<svelte:fragment slot="sidebarLeft">
 		<div class="w-56 h-full text-lg">
 			<AppRail width="w-full" gap="gap-0" regionDefault="m-4" active="bg-primary-active-token rounded-md" hover="bg-primary-hover-token rounded-md">
